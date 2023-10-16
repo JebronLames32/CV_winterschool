@@ -40,19 +40,11 @@ cv2.destroyWindow('EdgeImage')
 
 # Apply template matching algorithm to the edge-detected target image
 # result = cv2.matchTemplate(target_edges, template_edges, cv2.TM_SQDIFF_NORMED)
-
-# # print the result matrix
-# print(result.shape)
-# for i in range(result.shape[0]):
-#     for j in range(result.shape[1]):
-#         if(result[i][j] > 0.5):
-#             print(result[i][j],"position: ", i, j)
-
-# perform template matching using the normalized squared difference method without using the library
 result = np.zeros((target_edges.shape[0] - template_edges.shape[0] + 1, target_edges.shape[1] - template_edges.shape[1] + 1))
 for i in range(result.shape[0]):
     for j in range(result.shape[1]):
         result[i][j] = np.sum(np.square(target_edges[i:i+template_blur.shape[0], j:j+template_blur.shape[1]] - template_edges))
+
 
 print(np.argmin(result))
 min_loc = np.unravel_index(np.argmin(result), result.shape)
